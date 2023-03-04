@@ -18,7 +18,7 @@ $rightSidebarHasBlocks = $rightSidebarBlockContent->hasBlocks();
 <h3 class="label"><?php echo $translate('Media'); ?></h3>
 </div>
 <?php $this->trigger('view.show.before'); ?>
-<?php if ($fullWidthMainHasBlocks): ?>
+<?php if ($fullWidthMainHasBlocks && !empty($fullWidthMainBlockContent->getBlocks())): ?>
 <div class="full-width-main">
     <?php echo $fullWidthMainBlockContent->getBlocks(); ?>
 </div>
@@ -29,19 +29,19 @@ $rightSidebarHasBlocks = $rightSidebarBlockContent->hasBlocks();
 <?php $sidebarWidth = ($leftSidebarHasBlocks && $rightSidebarHasBlocks) ? '2' : '4'; ?>
 
 <div class="grid-x grid-margin-x">
-    <?php if ($leftSidebarHasBlocks): ?>
+    <?php if ($leftSidebarHasBlocks && !empty($leftSidebarBlockContent->getBlocks())): ?>
     <div class="left-sidebar cell medium-<?php echo $sidebarWidth; ?>">
         <?php echo $leftSidebarBlockContent->getBlocks(); ?>
     </div>
     <?php endif; ?>
 
-    <?php if ($mainWithSidebarHasBlocks): ?>
+    <?php if ($mainWithSidebarHasBlocks && !empty($mainWithSidebarBlockContent->getBlocks())): ?>
     <div class="main-with-sidebar cell medium-8">
         <?php echo $mainWithSidebarBlockContent->getBlocks(); ?>
     </div>
     <?php endif; ?>
 
-    <?php if ($rightSidebarHasBlocks): ?>
+    <?php if ($rightSidebarHasBlocks && !empty($rightSidebarBlockContent->getBlocks())): ?>
     <div class="right-sidebar cell medium-<?php echo $sidebarWidth; ?>">
         <?php echo $rightSidebarBlockContent->getBlocks(); ?>
     </div>
