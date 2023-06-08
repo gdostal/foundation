@@ -478,15 +478,19 @@ body.vertical-menu footer {
   margin: $global-margin 0;
   border-bottom: 1px solid $light-gray;
   padding-bottom: $global-padding;
+
+  img {
+    float: right;
+    margin-left: $global-margin;
+  }
 }
 
 .resource-list .resource-meta {
   @include xy-cell(12);
 }
 
-.resource > .resource-name {
+.resource-meta .resource-link .resource-name {
   @extend h4;
-  display: block;
 }
 
 .resource .resource-link img {
@@ -645,10 +649,14 @@ body.vertical-menu footer {
 
 .collapse + .collapsible {
     display: block;
+    width: 100%;
+}
+
+.property dl {
+    margin: (.5 * $global-margin) 0;
     border-left: 3px solid $light-gray;
     padding: (.25 * $global-padding) $global-padding;
-    margin: (.5 * $global-margin) 0;
-    width: 100%;
+    overflow: hidden;
 }
 
 .resource-title {
@@ -680,14 +688,17 @@ body.vertical-menu footer {
 }
 
 .resource.show .resource-link img,
-#linked-resources img {
+#linked-resources img,
+.results .resource-link img {
   @include thumbnail;
   height: ($paragraph-lineheight * 2rem);
   width: auto;
   min-width: 1px;
   margin: 0 (.5 * $global-margin) 0 0;
+  flex-shrink: 0;
 }
 
+.results .resource-link,
 .resource.show .resource-link {
   display: flex;
   align-items: center;
@@ -739,10 +750,26 @@ body.vertical-menu footer {
   }
 
   .linked-footer .omeka-pagination {
-	width: 100%;
+	  width: 100%;
     justify-content: flex-start;
     margin: 0;
   }
+}
+
+.resource.show .property dd {
+  clear: both;
+  overflow: hidden;
+}
+
+.resource.show .value.resource > .value-content {
+  float: left;
+  max-width: 80%;
+  margin-right: .5 * $global-padding;
+}
+
+.resource.show .value.resource .expand,
+.resource.show .value.resource .collapse {
+  line-height: 5 * $global-padding;
 }
 
 .resource.show .resource-link img,
@@ -752,7 +779,7 @@ body.vertical-menu footer {
 
 .resource.show .resource-link img,
 .media-list img {
-  margin: 0 $global-margin 0 0;
+  margin: 1px $global-margin 1px 1px;
   height: 5 * $global-padding;
   width: auto;
   max-width: none;
@@ -761,22 +788,66 @@ body.vertical-menu footer {
 
 .property {
   margin-bottom: $global-margin;
+  overflow: hidden;
+  clear: both;
+
+  .property:last-child,
+  .property:only-child {
+    margin-bottom: 0;
+  }
+
+  dl > dt:not(:first-of-type) {
+    margin-top: $global-margin;
+  }
+
 }
 
 .inline .property {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+  width: 100%;
   
+  dl {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
   dt {
     @include xy-cell(4);
     text-align: right;
+    break-before: always;
   }
-  
+
+  dl > dt:not(:first-of-type) + dd {
+    margin-top: $global-margin;
+  }
+
   .values,
-  .value {
+  .value,
+  dd {
     @include xy-cell(8);
   }
+}
+
+@include breakpoint(medium down) {
+
+  .inline .property .property {
+    display: block;
+  }
+
+  .inline .property dl {
+    padding: 0;
+  }
+
+  .property dl dt,
+  .property dl dd,
+  .property dl dd.value {
+    width: 100% !important;
+    text-align: left !important;
+  } 
+
 }
 
 .value .language {
@@ -785,14 +856,8 @@ body.vertical-menu footer {
   margin-right: .5 * $global-margin;
 }
 
-.value {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-
-    &:not(:last-child) {
-        margin-bottom: .5 * $global-margin;
-    }
+.value:not(:last-child) {
+  margin-bottom: .5 * $global-margin;
 }
 
 .value.resource {
@@ -808,6 +873,7 @@ body.vertical-menu footer {
   list-style: none;
   width: 100%;
   height: 60vh;
+  z-index: 0;
 }
 
 #itemfiles .media.resource {
@@ -830,7 +896,7 @@ body.vertical-menu footer {
   padding-bottom: 3 * $global-padding;
 }
 
-#itemfiles .lg-outer .lg-video-cont .lg-object {
+#itemfiles .lg-outer .lg-video-cont .lg-object:not(iframe) {
   width: auto !important;
 }
 
@@ -1118,7 +1184,9 @@ body.vertical-menu footer {
 }
 
 .results > ul > li {
-  margin-bottom: $global-padding;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   
   @include breakpoint(medium up) {
     width: 50%;	
@@ -1261,4 +1329,12 @@ body.vertical-menu footer {
 
 .mapping-block {
   width: 100%;
+}
+
+.uri-dereferencer-markup:empty {
+  display: none;
+}
+
+.metadata-browse-link {
+  margin: (.5 * $global-margin) 0;
 }
