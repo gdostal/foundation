@@ -1,0 +1,180 @@
+@charset 'utf-8';
+
+@import 'globals-default';
+@import 'globals-tphistory';
+@import 'settings';
+
+// TPHistory Settings
+$header-font-family: acumin-pro-semi-condensed, $font-sans;
+$keystroke-font: $font-mono;
+$code-font-family: $font-mono;
+
+@import 'foundation-core';
+@import 'omeka';
+
+header {
+  font-family: $header-font-family;
+  .site-title {
+    img { max-height: 5rem; }
+  }
+}
+
+.resource{
+  &.show {
+    & .full-width-main {
+      @include xy-grid;
+      @include xy-gutters($grid-margin-gutters, margin, left right, true);
+      width: initial;
+      @include breakpoint(medium down) {
+
+        & > * {
+          @include xy-cell(full, null, $grid-margin-gutters, none, null, null, false, base size gutters);
+        }
+
+        & dl:not([class]) {
+          @include flex-order(2);
+        }
+
+        & .media-list {
+          @include flex-order(1);
+        }
+
+        & .media-embeds {
+          @include flex-order(4);
+        }
+        & > :nth-child(n + 2):not(:nth-last-child(-n + 2)) {
+          @include flex-order(4);
+        }
+      }
+      @include breakpoint(medium up) {
+
+        & > * {
+          @include xy-cell(6);
+        }
+
+        & dl:not([class]) {
+          @include flex-order(2);
+        }
+
+        & .media-list {
+          @include flex-order(1);
+          @include xy-cell(full);
+          @include xy-grid;
+          @include flex-align(right);
+          margin-bottom: 0;
+
+          & > .property {
+            @include xy-cell(6);
+            margin-bottom: -8rem;
+          }
+        }
+
+        & .media-embeds {
+          @include flex-order(3);
+          margin-top: 8.5rem;
+        }
+
+        & > :nth-child(n + 2):not(:nth-last-child(-n + 2)) {
+          @include flex-order(4);
+        }
+      }
+    }
+
+    & .grid-x.grid-margin-x .cell {
+      @include breakpoint(medium down) {
+        @include xy-cell(auto, null, 0, margin, null, null, false, base size gutters);
+      }
+      @include breakpoint(medium up) {
+        @include xy-cell(6);
+        &:nth-child(1):nth-last-child(1) {
+          @include xy-cell(auto, null, $grid-margin-gutters, none, null, null, false, base size gutters);
+        }
+      }
+
+      & .grid-x > .grid-x {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+
+    & dl:not([class]) {
+      .value { overflow-wrap: anywhere; }
+    }
+
+    & .media-render.file:not(:last-child) {
+      margin-bottom: .5rem;
+    }
+  }
+  & .property > dt, .resource-name { @extend h5; }
+}
+
+.search {
+  .items.results li > a {
+    @extend h5;
+    color: $anchor-color;
+  }
+  .resource-link {
+    @include xy-grid;
+
+    & > img {
+      @include xy-cell(4);
+    }
+    & > span {
+      @include xy-cell(8);
+    }
+  }
+}
+
+.resource.show .values .resource-link img,
+#linked-resources img {
+ border: none;
+ min-width: unset;
+}
+
+.page.welcome #content{
+  @include xy-grid-collapse('.blocks', margin, left right, small);
+  margin: 0 auto;
+  & > .blocks {
+    width: 100%;
+    @include xy-grid;
+    & > * {
+      @include xy-cell(full);
+    }
+    & > .file {
+      @include breakpoint(medium) {
+        @include xy-cell(6);
+      }
+      @include breakpoint(large up) {
+        @include xy-cell(5);
+      }
+    }
+    & > .html-content {
+      @include breakpoint(medium) {
+        @include xy-cell(6);
+      }
+      @include breakpoint(large up) {
+        @include xy-cell(7);
+      }
+    }
+  }
+}
+
+.preview-block {
+  .resource-grid {
+    .resource {
+      @include xy-grid(vertical, true);
+      @include xy-grid-collapse(div, margin, top bottom left right, small);
+      @include flex-align(justify, middle);
+      text-align: center;
+
+      .description { text-align: left; }
+    }
+  }
+}
+.results > ul > li {
+  @include breakpoint(medium up) {
+    @include xy-cell(6);
+  }
+}
+
+footer { border-top : 1px solid $light-gray;}
